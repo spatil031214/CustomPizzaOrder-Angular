@@ -1,0 +1,24 @@
+<h2>Order's List</h2>
+
+<p>Menu
+    <select #lang (change)="selectedMenu(lang.value)" [disabled]="isSelectLang">
+        <option *ngFor="let idx of languagesArr" value="{{idx}}">
+            {{idx}}
+        </option>
+    </select>
+</p>
+
+<input type="button" (click)="addOrder()" value="New pizza">
+
+<li *ngFor="let order of ordersArr">
+    <button (click)="removeOrder(order)">Remove</button>
+
+    <span>
+        <button (click)="onSelect(order)">Edit</button>
+        Order ID#{{order.id}} 
+        | Size: {{order.sizeId}} 
+        | Crust: {{order.crustId}} 
+        | Qt toppings: {{order.getNumToppings()}} 
+        | ${{order.price.toFixed(2)}}
+    </span>
+</li>

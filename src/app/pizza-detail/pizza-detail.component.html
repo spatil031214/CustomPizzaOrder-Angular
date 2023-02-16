@@ -1,0 +1,46 @@
+<ng-template #emptyOrder><h2>Click NEW PIZZA or EDIT to change your order</h2></ng-template>
+<div *ngIf="_order; else emptyOrder">
+
+    <h2>Detail order ID# {{_order.id}} : CAD$ {{price().toFixed(2)}}</h2>
+
+    <p>Size
+        <select #size (change)="updateSize(size.value)">
+            <option *ngFor="let size of sizes" 
+                    [selected]="size.id==_order.getSizeId()" 
+                    value="{{size.id}}">
+                {{size.id}} | {{size.name}} | {{size.price.toFixed(2)}}
+            </option>
+        </select>
+    </p>
+
+    <p>Crust
+        <select #crust (change)="updateCrust(crust.value)">
+            <option *ngFor="let crust of crusts" 
+                    [selected]="crust.id==_order.getCrustId()" 
+                    value="{{crust.id}}">
+                {{crust.id}} | {{crust.name}} | {{crust.price.toFixed(2)}}
+            </option>
+        </select>
+    </p>
+
+    <p>Toppings added: {{this._order.getNumToppings()}} | Remained {{toppingsRemain}}</p>
+    <ul class="toppings">
+        <li *ngFor="let toppings of toppings"
+            [class.selected]="toppings === selectedTopping">
+            
+            <span class="badge">
+                <button [disabled]="toppingsRemain==0" 
+                    (click)="addToppingNew(toppings)">+
+                </button>
+
+                {{toppings.qt}}
+                
+                <button [disabled]="toppings.qt==0" 
+                    (click)="subractToppingNew(toppings)">-
+                </button>
+            </span>
+            
+            {{toppings.name}} {{toppings.price.toFixed(2)}}
+        </li>
+    </ul>
+</div>
